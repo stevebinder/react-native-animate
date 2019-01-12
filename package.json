@@ -1,0 +1,17 @@
+{
+  "author": "Steve Binder <email@stevebinder.com>",
+  "description": "React Native animation utility.",
+  "keywords": [
+    "react",
+    "native",
+    "animation",
+    "transition"
+  ],
+  "license": "MIT",
+  "name": "react-native-animate",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stevebinder/react-native-animate"
+  },
+  "version": "1.0.1"
+}
