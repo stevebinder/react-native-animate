@@ -1,6 +1,6 @@
 # Animate
 
-Animations in React Native can be a pain... this utility makes them easy!
+Easy React Native animations.
 
 ```
 animate(
