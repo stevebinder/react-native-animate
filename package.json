@@ -1,6 +1,9 @@
 {
   "author": "Steve Binder <email@stevebinder.com>",
-  "description": "React Native animation utility.",
+  "dependencies": {
+    "react-native": "*"
+  },
+  "description": "Easy React Native animations.",
   "keywords": [
     "react",
     "native",
@@ -13,5 +16,5 @@
     "type": "git",
     "url": "https://github.com/stevebinder/react-native-animate"
   },
-  "version": "1.0.1"
+  "version": "1.0.2"
 }
