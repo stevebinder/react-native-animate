@@ -9,7 +9,8 @@ animate(
   duration = 0,
   easer = 'linear',
   delay = 0,
-  callback = () => {},
+  onEnd = () => {},
+  onChange = () => {},
 );
 ```
 
