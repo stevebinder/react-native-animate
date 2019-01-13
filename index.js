@@ -44,12 +44,19 @@ export default (
   duration = 0,
   easer = '',
   delay = 0,
-  callback = () => {},
+  onEnd,
+  onChange,
 ) => {
   const value = getValue(start);
+  value.removeAllListeners();
+  if (onChange) {
+    value.addListener(event => onChange(event.value));
+  }
   if (duration <= 0) {
     value.setValue(end);
-    setTimeout(() => callback(end));
+    if (onEnd) {
+      setTimeout(() => onEnd(end));
+    }
   } else {
     const timing = Animated.timing(
       value,
@@ -66,7 +73,9 @@ export default (
       stopped = true;
       timing.stop();
     };
-    timing.start(() => !stopped && callback(end));
+    timing.start(onEnd
+      ? () => !stopped && onEnd(end)
+      : undefined);
   }
   return value;
 };
