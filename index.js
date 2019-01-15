@@ -38,17 +38,21 @@ const getValue = value => {
   return new Animated.Value(value);
 };
 
-export default (
-  start = 0,
-  end = 0,
-  duration = 0,
-  easer = '',
-  delay = 0,
-  onEnd,
-  onChange,
-) => {
+export default (...args) => {
+  const [
+    start = 0,
+    end = 0,
+    duration = 0,
+    easer = '',
+    delay = 0,
+    onEnd,
+    onChange,
+  ] = args;
   const value = getValue(start);
   value.removeAllListeners();
+  if (args.length === 1) {
+    return value;
+  }
   if (onChange) {
     value.addListener(event => onChange(event.value));
   }

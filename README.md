@@ -22,30 +22,26 @@ import animate from 'react-native-animate';
 class extends Component {
 
   state = {
-    opacity: 1,
+    opacity: animate(1),
   };
 
-  onFadeIn = () => this.setState({
-    opacity: animate(
-      this.state.opacity,
-      1,
-      3000,
-      'ease-in-out',
-      1000,
-      () => console.log('we are now faded in!'),
-    ),
-  });
+  onFadeIn = () => animate(
+    this.state.opacity,
+    1,
+    3000,
+    'ease-in-out',
+    1000,
+    () => console.log('we are now faded in!'),
+  );
 
-  onFadeOut = () => this.setState({
-    opacity: animate(
-      this.state.opacity,
-      0,
-      1000,
-      [0.79, 0.09, 0.15, 0.98],
-      0,
-      () => console.log('look at that bezier curve!'),
-    ),
-  });
+  onFadeOut = () => animate(
+    this.state.opacity,
+    0,
+    1000,
+    [0.79, 0.09, 0.15, 0.98],
+    0,
+    () => console.log('look at that bezier curve!'),
+  );
 
   render() {
     return (
