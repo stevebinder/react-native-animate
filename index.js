@@ -1,5 +1,6 @@
 import { Animated, Easing } from 'react-native';
 
+const startKey = `__${Math.ceil(Math.random() * 10000000000)}`;
 const stopKey = `__${Math.ceil(Math.random() * 10000000000)}`;
 
 const getEasing = easer => {
@@ -28,27 +29,31 @@ const getEasing = easer => {
   return Easing.linear;
 };
 
-const getValue = value => {
+const getValue = (value, fromLoop) => {
   if (value && typeof value === 'object') {
-    if (value[stopKey]) {
+    if (fromLoop !== -1 && value[stopKey]) {
       value[stopKey]();
     }
     return value;
   }
-  return new Animated.Value(value);
+  const animatedValue = new Animated.Value(value);
+  animatedValue[startKey] = value;
+  return animatedValue;
 };
 
-export default (...args) => {
+const animate = (...args) => {
   const [
     start = 0,
     end = 0,
     duration = 0,
     easer = '',
     delay = 0,
-    onEnd,
-    onChange,
+    loop = false,
+    onChange = null,
+    onEnd = null,
+    fromLoop = 0,
   ] = args;
-  const value = getValue(start);
+  const value = getValue(start, fromLoop);
   value.removeAllListeners();
   if (args.length === 1) {
     return value;
@@ -77,9 +82,16 @@ export default (...args) => {
       stopped = true;
       timing.stop();
     };
-    timing.start(onEnd
-      ? () => !stopped && onEnd(end)
-      : undefined);
+    timing.start(() => {
+      if (loop) {
+        value.setValue(value[startKey]);
+        animate(start, end, duration, easer, delay, loop, onChange, onEnd, -1);
+      } else if (!stopped && onEnd) {
+        onEnd(end);
+      }
+    });
   }
   return value;
 };
+
+export default animate;
