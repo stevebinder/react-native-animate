@@ -9,6 +9,7 @@ animate(
   duration = 0,
   easer = 'linear',
   delay = 0,
+  loop = false,
   onEnd = () => {},
   onChange = () => {},
 );
@@ -31,6 +32,7 @@ class extends Component {
     3000,
     'ease-in-out',
     1000,
+    false,
     () => console.log('we are now faded in!'),
   );
 
@@ -40,6 +42,7 @@ class extends Component {
     1000,
     [0.79, 0.09, 0.15, 0.98],
     0,
+    false,
     () => console.log('look at that bezier curve!'),
   );
 
