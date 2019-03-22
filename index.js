@@ -49,8 +49,8 @@ const animate = (...args) => {
     easer = '',
     delay = 0,
     loop = false,
-    onChange = null,
     onEnd = null,
+    onChange = null,
     fromLoop = 0,
   ] = args;
   const value = getValue(start, fromLoop);
@@ -85,7 +85,7 @@ const animate = (...args) => {
     timing.start(() => {
       if (loop) {
         value.setValue(value[startKey]);
-        animate(start, end, duration, easer, delay, loop, onChange, onEnd, -1);
+        animate(start, end, duration, easer, delay, loop, onEnd, onChange, -1);
       } else if (!stopped && onEnd) {
         onEnd(end);
       }
