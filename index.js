@@ -41,7 +41,7 @@ const getValue = (value, fromLoop) => {
   return animatedValue;
 };
 
-const animate = (...args) => {
+export const animate = (...args) => {
   const [
     start = 0,
     end = 0,
@@ -93,5 +93,11 @@ const animate = (...args) => {
   }
   return value;
 };
+
+export const interpolate = (input, min, max, toMin, toMax) =>
+  getValue(input).interpolate({
+    inputRange: [min, max],
+    outputRange: [toMin, toMax],
+  });
 
 export default animate;
