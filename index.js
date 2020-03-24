@@ -54,6 +54,11 @@ export const animate = (...args) => {
     fromLoop = 0,
   ] = args;
   const value = getValue(start, fromLoop);
+  if (value.initialStart === undefined) {
+    value.initialStart = start;
+    value.initialEnd = end;
+  }
+  let timing = null;
   value.removeAllListeners();
   if (args.length === 1) {
     return value;
@@ -67,7 +72,7 @@ export const animate = (...args) => {
       setTimeout(() => onEnd(end));
     }
   } else {
-    const timing = Animated.timing(
+    timing = Animated.timing(
       value,
       {
         toValue: end,
@@ -91,13 +96,35 @@ export const animate = (...args) => {
       }
     });
   }
+  value.timing = timing;
+  value.translate = (...args) => translate(value, ...args);
+  value.pause = (...args) => pause(value, ...args);
+  value.play = (...args) => play(value, ...args);
   return value;
 };
 
-export const interpolate = (input, min, max, toMin, toMax) =>
-  getValue(input).interpolate({
-    inputRange: [min, max],
+export const pause = input => {
+  const value = getValue(input);
+  const timing = value.timing;
+  if (timing) {
+    timing.stop();
+  }
+};
+
+export const play = input => {
+  const value = getValue(input);
+  const timing = value.timing;
+  if (timing) {
+    timing.start();
+  }
+};
+
+export const translate = (input, toMin, toMax) => {
+  const value = getValue(input);
+  return value.interpolate({
+    inputRange: [value.initialStart, value.initialEnd],
     outputRange: [toMin, toMax],
   });
+};
 
 export default animate;
